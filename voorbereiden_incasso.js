@@ -9,7 +9,7 @@ const new_payments = [];
 const parser = new XMLParser();
 
 const oldIncasso = fs.readFileSync(
-  path.join(__dirname, "..", "oud.xml")
+  path.join(__dirname, "oud.xml")
 );
 _.get(parser.parse(oldIncasso), ["Document", "CstmrDrctDbtInitn", "PmtInf"])
   .flatMap((t) => _.get(t, "DrctDbtTxInf"))
@@ -18,7 +18,7 @@ _.get(parser.parse(oldIncasso), ["Document", "CstmrDrctDbtInitn", "PmtInf"])
   );
 
 const newIncasso = fs.readFileSync(
-  path.join(__dirname, "..", "nieuw.xml")
+  path.join(__dirname, "nieuw.xml")
 );
 _.get(parser.parse(newIncasso), ["Document", "CstmrDrctDbtInitn", "PmtInf"])
   .flatMap((t) => _.get(t, "DrctDbtTxInf"))
