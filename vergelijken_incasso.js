@@ -110,17 +110,10 @@ fs.writeFileSync(
   JSON.stringify(doubleOldTransactions)
 );
 
-console.log();
-console.log("Machtigingskenmerken van missende transacties:");
-console.log(JSON.stringify(excessOld));
 fs.writeFileSync(
   path.join(__dirname, "output", "missende_transacties.json"),
   JSON.stringify(excessOld)
 );
-
-console.log();
-console.log("Machtigingskenmerken van extra transacties:");
-console.log(JSON.stringify(excessNew));
 fs.writeFileSync(
   path.join(__dirname, "output", "extra_transacties.json"),
   JSON.stringify(excessNew)
