@@ -55,13 +55,24 @@ fs.readdirSync(path.join(__dirname, "nieuw"))
 const newIncassoMap = {};
 const oldIncassoMap = {};
 
-for (const entry of new_payments) {
-  const key = Object.keys(entry)[0];
-  newIncassoMap[key] = entry[key];
-}
+const doubleNewTransactions = [];
+const doubleOldTransactions = [];
 
 for (const entry of new_payments) {
   const key = Object.keys(entry)[0];
+  if (newIncassoMap[key]) {
+    console.log("Er zijn meerdere nieuwe transacties met kenmerk", key);
+    doubleNewTransactions.push(key);
+  }
+  newIncassoMap[key] = entry[key];
+}
+
+for (const entry of old_payments) {
+  const key = Object.keys(entry)[0];
+  if (oldIncassoMap[key]) {
+    console.log("Er zijn meerdere oude transacties met kenmerk", key);
+    doubleOldTransactions.push(key);
+  }
   oldIncassoMap[key] = entry[key];
 }
 
@@ -89,6 +100,15 @@ for (const x of overlap) {
     wrongAmount.push(x);
   }
 }
+
+fs.writeFileSync(
+  path.join(__dirname, "output", "dubbele_nieuwe_transacties.json"),
+  JSON.stringify(doubleNewTransactions)
+);
+fs.writeFileSync(
+  path.join(__dirname, "output", "dubbele_oude_transacties.json"),
+  JSON.stringify(doubleOldTransactions)
+);
 
 console.log();
 console.log("Machtigingskenmerken van missende transacties:");
